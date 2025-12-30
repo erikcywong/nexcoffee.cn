@@ -22,7 +22,6 @@
             background-color: #000;
             color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
         }
         
         .glass-panel {
@@ -93,167 +92,92 @@
             display: block;
         }
         
-        /* 钱包模态框样式 */
-        .wallet-modal {
-            display: none;
+        /* 模态框样式 */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
         }
         
-        .wallet-modal.active {
-            display: flex;
+        .modal-overlay.active {
             opacity: 1;
+            visibility: visible;
         }
         
-        .wallet-modal-content {
+        .modal-content {
             background: #111827;
-            border-radius: 20px;
+            border: 1px solid #374151;
+            border-radius: 1.5rem;
             width: 90%;
-            max-width: 550px;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            border: 1px solid rgba(55, 65, 81, 0.7);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
+            transform: scale(0.9);
+            transition: transform 0.3s;
         }
         
-        .wallet-modal.active .wallet-modal-content {
-            transform: translateY(0);
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
         }
         
-        /* 钱包连接状态指示器 */
-        .wallet-status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+        /* 钱包图标样式 */
+        .wallet-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        
+        .metamask-icon {
+            background: linear-gradient(135deg, #F6851B, #E2761B);
+        }
+        
+        .coinbase-icon {
+            background: linear-gradient(135deg, #0052FF, #0052FF);
+        }
+        
+        .walletconnect-icon {
+            background: linear-gradient(135deg, #3B99FC, #3B99FC);
+        }
+        
+        .wechat-icon {
+            background: linear-gradient(135deg, #07C160, #07C160);
+        }
+        
+        .alipay-icon {
+            background: linear-gradient(135deg, #1677FF, #1677FF);
+        }
+        
+        /* 连接状态指示器 */
+        .connection-status {
             display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             margin-right: 8px;
         }
         
-        .wallet-status-connected {
+        .connected {
             background-color: #00D4AA;
             box-shadow: 0 0 10px #00D4AA;
         }
         
-        .wallet-status-disconnected {
+        .disconnected {
             background-color: #9CA3AF;
-        }
-        
-        /* 钱包选项卡片 */
-        .wallet-option-card {
-            border: 1px solid rgba(55, 65, 81, 0.5);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .wallet-option-card:hover {
-            border-color: #00D4AA;
-            background-color: rgba(0, 212, 170, 0.05);
-            transform: translateY(-3px);
-        }
-        
-        /* 加载动画 */
-        .loading-spinner {
-            border: 3px solid rgba(55, 65, 81, 0.3);
-            border-top: 3px solid #00D4AA;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* 交易记录卡片 */
-        .transaction-card {
-            border-left: 3px solid transparent;
-            transition: all 0.2s ease;
-        }
-        
-        .transaction-card:hover {
-            border-left-color: #00D4AA;
-            background-color: rgba(0, 212, 170, 0.05);
-        }
-        
-        /* 支付方式标签 */
-        .payment-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-        
-        .payment-badge-wechat {
-            background-color: rgba(7, 193, 96, 0.2);
-            color: #07C160;
-            border: 1px solid rgba(7, 193, 96, 0.3);
-        }
-        
-        .payment-badge-alipay {
-            background-color: rgba(0, 113, 240, 0.2);
-            color: #0071F0;
-            border: 1px solid rgba(0, 113, 240, 0.3);
-        }
-        
-        /* 二维码样式 */
-        .qr-code-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            margin: 20px auto;
-            width: 200px;
-            height: 200px;
-        }
-        
-        .qr-code-placeholder {
-            width: 180px;
-            height: 180px;
-            background: linear-gradient(45deg, #f0f0f0 25%, #ffffff 25%, #ffffff 50%, #f0f0f0 50%, #f0f0f0 75%, #ffffff 75%, #ffffff);
-            background-size: 20px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-        
-        /* 微信/支付宝专属样式 */
-        .wechat-green {
-            color: #07C160;
-        }
-        
-        .alipay-blue {
-            color: #0071F0;
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 640px) {
-            .wallet-modal-content {
-                width: 95%;
-                border-radius: 12px;
-            }
-            
-            .qr-code-container {
-                width: 180px;
-                height: 180px;
-            }
         }
     </style>
 </head>
@@ -311,22 +235,25 @@
                     </nav>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button id="connect-wallet-btn" class="rounded-full bg-[#00D4AA] px-6 py-2 font-semibold text-black hover:bg-[#00D4AA]/90 transition-colors flex items-center" onclick="openWalletModal()">
-                        <span id="wallet-btn-text">连接钱包</span>
-                        <span id="wallet-status-indicator" class="wallet-status-indicator wallet-status-disconnected ml-2"></span>
+                    <div id="wallet-status" class="hidden items-center space-x-2 px-3 py-2 rounded-full bg-gray-900">
+                        <span class="connection-status connected"></span>
+                        <span class="text-sm font-medium">已连接</span>
+                        <span id="wallet-address" class="text-xs text-gray-400 font-mono">0x1a2b...3c4d</span>
+                    </div>
+                    <button id="connect-wallet-btn" class="rounded-full bg-[#00D4AA] px-6 py-2 font-semibold text-black hover:bg-[#00D4AA]/90 transition-colors" onclick="showWalletModal()">
+                        连接钱包
                     </button>
-                    <div class="h-8 w-8 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] cursor-pointer" onclick="openWalletModal()"></div>
+                    <div class="h-8 w-8 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0]"></div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- 钱包连接模态框 -->
-    <div id="wallet-modal" class="wallet-modal">
-        <div class="wallet-modal-content">
-            <!-- 钱包连接标题 -->
-            <div class="sticky top-0 bg-gray-900 border-b border-gray-800 px-6 py-4 rounded-t-2xl z-10">
-                <div class="flex items-center justify-between">
+    <div id="wallet-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl font-bold">连接钱包</h2>
                     <button onclick="closeWalletModal()" class="text-gray-400 hover:text-white transition-colors">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,379 +261,139 @@
                         </svg>
                     </button>
                 </div>
-            </div>
-            
-            <!-- 钱包连接内容 -->
-            <div class="p-6">
-                <!-- 已连接状态显示 -->
-                <div id="wallet-connected-section" class="hidden">
-                    <div class="mb-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center">
-                                <div class="wallet-status-indicator wallet-status-connected"></div>
-                                <span class="font-medium text-[#00D4AA]">已连接</span>
-                                <span id="connected-wallet-type" class="payment-badge payment-badge-wechat ml-2">微信钱包</span>
-                            </div>
-                            <button onclick="disconnectWallet()" class="text-sm text-gray-400 hover:text-white transition-colors">
-                                断开连接
-                            </button>
-                        </div>
-                        
-                        <!-- 钱包地址信息 -->
-                        <div class="bg-gray-800 rounded-xl p-4 mb-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center">
-                                    <div id="connected-wallet-icon" class="h-10 w-10 rounded-full bg-gradient-to-br from-[#07C160] to-green-400 flex items-center justify-center mr-3">
-                                        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M6.5 12.5c0 1.933 2.067 3.5 4 3.5 1.933 0 4-1.567 4-3.5s-2.067-3.5-4-3.5c-1.933 0-4 1.567-4 3.5z"/>
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold">JEBI Zero 钱包</p>
-                                        <p id="connected-wallet-address" class="text-sm text-gray-400 font-mono">微信用户_15800222338</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-gray-400">网络</p>
-                                    <p class="font-medium text-[#00D4AA]">JEBI支付网络</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 余额信息 -->
-                            <div class="grid grid-cols-3 gap-4 mt-4">
-                                <div class="text-center">
-                                    <p class="text-sm text-gray-400">JEBI代币</p>
-                                    <p class="font-bold">1,250</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-sm text-gray-400">碳积分</p>
-                                    <p class="font-bold">5,280</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-sm text-gray-400">人民币</p>
-                                    <p class="font-bold">¥2,450</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 快速操作 -->
-                        <div class="mb-6">
-                            <h3 class="font-medium mb-3">快速操作</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <button onclick="sendTransaction()" class="flex items-center justify-center p-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
-                                    <svg class="h-5 w-5 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                    </svg>
-                                    <span>发送</span>
-                                </button>
-                                <button onclick="receiveTokens()" class="flex items-center justify-center p-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
-                                    <svg class="h-5 w-5 text-[#1D9BF0] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-                                    </svg>
-                                    <span>接收</span>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- 最近交易 -->
-                        <div>
-                            <h3 class="font-medium mb-3">最近交易</h3>
-                            <div class="space-y-3">
-                                <div class="transaction-card flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
-                                    <div class="flex items-center">
-                                        <div class="p-2 rounded-lg bg-green-900/20 mr-3">
-                                            <svg class="h-4 w-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-sm">接收 JEBI</p>
-                                            <p class="text-xs text-gray-400">2小时前</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-medium text-green-400">+250 JEBI</p>
-                                        <span class="payment-badge payment-badge-wechat text-xs">微信</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="transaction-card flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
-                                    <div class="flex items-center">
-                                        <div class="p-2 rounded-lg bg-red-900/20 mr-3">
-                                            <svg class="h-4 w-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-sm">购买RWA资产</p>
-                                            <p class="text-xs text-gray-400">1天前</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-medium text-red-400">-¥1,250</p>
-                                        <span class="payment-badge payment-badge-alipay text-xs">支付宝</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="transaction-card flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
-                                    <div class="flex items-center">
-                                        <div class="p-2 rounded-lg bg-blue-900/20 mr-3">
-                                            <svg class="h-4 w-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-sm">碳积分兑换</p>
-                                            <p class="text-xs text-gray-400">3天前</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-medium text-blue-400">+500 碳积分</p>
-                                        <span class="payment-badge payment-badge-wechat text-xs">微信</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-                <!-- 未连接状态显示 -->
-                <div id="wallet-disconnected-section">
-                    <div class="text-center mb-8">
-                        <div class="h-16 w-16 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center mx-auto mb-4">
-                            <svg class="h-8 w-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">连接你的钱包</h3>
-                        <p class="text-gray-400">选择钱包类型以访问JEBI Zero生态系统中的所有功能</p>
-                    </div>
+                <p class="text-gray-400 mb-8">选择您想要连接的钱包。连接后，您可以管理您的数字资产并参与JEBI Zero生态系统。</p>
+                
+                <div class="space-y-4">
+                    <h3 class="font-semibold text-gray-300 mb-3">国际钱包</h3>
                     
-                    <!-- 钱包选项 -->
-                    <div class="space-y-3 mb-6">
-                        <!-- 区块链钱包选项 -->
-                        <div class="mb-4">
-                            <h4 class="font-medium text-gray-400 text-sm mb-3 uppercase tracking-wider">区块链钱包</h4>
-                            <div class="space-y-3">
-                                <div class="wallet-option-card p-4 rounded-xl bg-gray-800/50" onclick="connectWallet('metamask')">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 rounded-lg bg-orange-900/20 flex items-center justify-center mr-4">
-                                            <svg class="h-6 w-6 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-grow">
-                                            <h4 class="font-bold">MetaMask</h4>
-                                            <p class="text-sm text-gray-400">浏览器扩展钱包</p>
-                                        </div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                <div class="wallet-option-card p-4 rounded-xl bg-gray-800/50" onclick="connectWallet('walletconnect')">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 rounded-lg bg-blue-900/20 flex items-center justify-center mr-4">
-                                            <svg class="h-6 w-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-grow">
-                                            <h4 class="font-bold">WalletConnect</h4>
-                                            <p class="text-sm text-gray-400">移动端钱包连接</p>
-                                        </div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                <div class="wallet-option-card p-4 rounded-xl bg-gray-800/50" onclick="connectWallet('coinbase')">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 rounded-lg bg-blue-900/20 flex items-center justify-center mr-4">
-                                            <svg class="h-6 w-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-grow">
-                                            <h4 class="font-bold">Coinbase Wallet</h4>
-                                            <p class="text-sm text-gray-400">Coinbase生态钱包</p>
-                                        </div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <button onclick="connectWallet('metamask')" class="flex flex-col items-center p-4 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors card-hover">
+                            <div class="wallet-icon metamask-icon">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 40 40" fill="none">
+                                    <path d="M36.0112 3.33337L22.1207 13.6277L24.7012 7.59154L36.0112 3.33337Z" fill="#E17726"/>
+                                    <path d="M4.0026 3.33337L17.7026 13.7308L15.2988 7.59154L4.0026 3.33337Z" fill="#E27625"/>
+                                    <path d="M31.0149 27.2023L27.3225 32.8577L35.2286 35.1154L37.6392 27.3215L31.0149 27.2023Z" fill="#E27625"/>
+                                    <path d="M2.37305 27.3215L4.77122 35.1154L12.6773 32.8577L8.99867 27.2023L2.37305 27.3215Z" fill="#E27625"/>
+                                    <path d="M12.2518 17.6492L10.0415 20.7277L17.8374 21.1154L17.5523 12.8046L12.2518 17.6492Z" fill="#E27625"/>
+                                    <path d="M27.762 17.6492L22.3462 12.6892L22.1207 21.1154L29.9585 20.7277L27.762 17.6492Z" fill="#E27625"/>
+                                    <path d="M12.6773 32.8577L17.3988 30.5554L13.3365 27.3785L12.6773 32.8577Z" fill="#E27625"/>
+                                    <path d="M22.6012 30.5554L27.3225 32.8577L26.6633 27.3785L22.6012 30.5554Z" fill="#E27625"/>
+                                    <path d="M27.3225 32.8577L22.6012 30.5554L22.9874 33.6392L22.9474 34.9999L27.3225 32.8577Z" fill="#D5BFB2"/>
+                                    <path d="M12.6773 32.8577L17.0523 34.9999L17.0249 33.6392L17.3988 30.5554L12.6773 32.8577Z" fill="#D5BFB2"/>
+                                    <path d="M17.164 25.1154L13.3365 24.062L16.0437 22.6985L17.164 25.1154Z" fill="#233447"/>
+                                    <path d="M22.836 25.1154L23.9562 22.6985L26.6773 24.062L22.836 25.1154Z" fill="#233447"/>
+                                    <path d="M12.6773 32.8577L13.3637 27.2023L8.99867 27.3215L12.6773 32.8577Z" fill="#CC6228"/>
+                                    <path d="M26.6362 27.2023L27.3225 32.8577L31.0149 27.3215L26.6362 27.2023Z" fill="#CC6228"/>
+                                    <path d="M29.9585 20.7277L22.1207 21.1154L22.836 25.1154L23.9562 22.6985L26.6773 24.062L29.9585 20.7277Z" fill="#CC6228"/>
+                                    <path d="M13.3365 24.062L16.0437 22.6985L17.164 25.1154L17.8792 21.1154L10.0415 20.7277L13.3365 24.062Z" fill="#CC6228"/>
+                                    <path d="M10.0415 20.7277L13.3365 27.3785L13.3365 24.062L10.0415 20.7277Z" fill="#E27525"/>
+                                    <path d="M26.6773 24.062L26.6633 27.3785L29.9585 20.7277L26.6773 24.062Z" fill="#E27525"/>
+                                    <path d="M17.8792 21.1154L17.164 25.1154L18.0718 30.0462L18.2518 23.6277L17.8792 21.1154Z" fill="#E27525"/>
+                                    <path d="M22.1207 21.1154L21.7605 23.6154L21.9282 30.0462L22.836 25.1154L22.1207 21.1154Z" fill="#E27525"/>
+                                    <path d="M22.836 25.1154L21.9282 30.0462L22.6012 30.5554L26.6633 27.3785L26.6773 24.062L22.836 25.1154Z" fill="#F5841F"/>
+                                    <path d="M13.3365 24.062L13.3365 27.3785L17.3988 30.5554L18.0718 30.0462L17.164 25.1154L13.3365 24.062Z" fill="#F5841F"/>
+                                    <path d="M22.9474 34.9999L22.9874 33.6392L22.6273 33.3215H17.3725L17.0249 33.6392L17.0523 34.9999L12.6773 32.8577L14.2907 34.1154L17.3273 36.2492H22.6725L25.709 34.1154L27.3225 32.8577L22.9474 34.9999Z" fill="#C0AC9D"/>
+                                    <path d="M22.6012 30.5554L21.9282 30.0462H18.0718L17.3988 30.5554L17.0249 33.6392L17.3725 33.3215H22.6273L22.9874 33.6392L22.6012 30.5554Z" fill="#161616"/>
+                                    <path d="M36.5874 14.2492L37.9999 8.33337L36.0112 3.33337L22.6012 13.0862L27.762 17.6492L35.0362 19.9877L36.6523 18.2492L35.9487 17.7138L37.0899 16.7138L36.1988 16.0138L37.3273 15.2023L36.5874 14.2492Z" fill="#763E1A"/>
+                                    <path d="M2 8.33337L3.41255 14.2492L2.67255 15.2023L3.80105 16.0138L2.91005 16.7138L4.05105 17.7138L3.34755 18.2492L4.96367 19.9877L12.2518 17.6492L17.3988 13.0862L4.0026 3.33337L2 8.33337Z" fill="#763E1A"/>
+                                    <path d="M35.0362 19.9877L27.762 17.6492L29.9585 20.7277L26.6633 27.3785L31.0149 27.3215H37.6392L35.0362 19.9877Z" fill="#F5841F"/>
+                                    <path d="M12.2518 17.6492L4.96367 19.9877L2.37305 27.3215H8.99867L13.3365 27.3785L10.0415 20.7277L12.2518 17.6492Z" fill="#F5841F"/>
+                                    <path d="M22.1207 21.1154L22.6012 13.0862L24.7012 7.59154H15.2988L17.3988 13.0862L17.8792 21.1154L18.0592 23.6392L18.0718 30.0462H21.9282L21.9523 23.6392L22.1207 21.1154Z" fill="#F5841F"/>
+                                </svg>
                             </div>
-                        </div>
+                            <span class="font-semibold mb-1">MetaMask</span>
+                            <span class="text-xs text-gray-400">最受欢迎的Web3钱包</span>
+                        </button>
                         
-                        <!-- 中国支付钱包选项 -->
-                        <div class="mb-4">
-                            <h4 class="font-medium text-gray-400 text-sm mb-3 uppercase tracking-wider">中国支付钱包</h4>
-                            <div class="space-y-3">
-                                <div class="wallet-option-card p-4 rounded-xl bg-gray-800/50" onclick="connectWechatWallet()">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 rounded-lg bg-green-900/20 flex items-center justify-center mr-4">
-                                            <svg class="h-6 w-6 text-green-400" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M6.5 12.5c0 1.933 2.067 3.5 4 3.5 1.933 0 4-1.567 4-3.5s-2.067-3.5-4-3.5c-1.933 0-4 1.567-4 3.5z"/>
-                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-grow">
-                                            <h4 class="font-bold">微信钱包</h4>
-                                            <p class="text-sm text-gray-400">扫码连接微信支付</p>
-                                        </div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                <div class="wallet-option-card p-4 rounded-xl bg-gray-800/50" onclick="connectAlipayWallet()">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 rounded-lg bg-blue-900/20 flex items-center justify-center mr-4">
-                                            <svg class="h-6 w-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                                                <path d="M7 7h10v10H7z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="flex-grow">
-                                            <h4 class="font-bold">支付宝钱包</h4>
-                                            <p class="text-sm text-gray-400">扫码连接支付宝</p>
-                                        </div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
+                        <button onclick="connectWallet('coinbase')" class="flex flex-col items-center p-4 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors card-hover">
+                            <div class="wallet-icon coinbase-icon">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 40 40" fill="none">
+                                    <rect width="40" height="40" rx="8" fill="#0052FF"/>
+                                    <path d="M10 20C10 14.4772 14.4772 10 20 10C25.5228 10 30 14.4772 30 20C30 25.5228 25.5228 30 20 30C14.4772 30 10 25.5228 10 20Z" fill="white"/>
+                                    <path d="M20 25C22.7614 25 25 22.7614 25 20C25 17.2386 22.7614 15 20 15C17.2386 15 15 17.2386 15 20C15 22.7614 17.2386 25 20 25Z" fill="#0052FF"/>
+                                </svg>
                             </div>
-                        </div>
+                            <span class="font-semibold mb-1">Coinbase Wallet</span>
+                            <span class="text-xs text-gray-400">安全的交易所钱包</span>
+                        </button>
+                        
+                        <button onclick="connectWallet('walletconnect')" class="flex flex-col items-center p-4 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors card-hover">
+                            <div class="wallet-icon walletconnect-icon">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 40 40" fill="none">
+                                    <rect width="40" height="40" rx="8" fill="#3B99FC"/>
+                                    <path d="M12 20C12 15.5817 15.5817 12 20 12C24.4183 12 28 15.5817 28 20C28 24.4183 24.4183 28 20 28C15.5817 28 12 24.4183 12 20Z" fill="white"/>
+                                    <path d="M20 24C22.2091 24 24 22.2091 24 20C24 17.7909 22.2091 16 20 16C17.7909 16 16 17.7909 16 20C16 22.2091 17.7909 24 20 24Z" fill="#3B99FC"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold mb-1">WalletConnect</span>
+                            <span class="text-xs text-gray-400">跨平台连接</span>
+                        </button>
                     </div>
                     
-                    <!-- 连接说明 -->
-                    <div class="bg-gray-800/30 rounded-xl p-4">
-                        <h4 class="font-medium mb-2 flex items-center">
-                            <svg class="h-5 w-5 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            为什么需要连接钱包？
-                        </h4>
-                        <ul class="text-sm text-gray-400 space-y-1">
+                    <h3 class="font-semibold text-gray-300 mb-3">中国钱包</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <button onclick="connectWallet('wechat')" class="flex flex-col items-center p-4 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors card-hover">
+                            <div class="wallet-icon wechat-icon">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 40 40" fill="none">
+                                    <rect width="40" height="40" rx="8" fill="#07C160"/>
+                                    <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10ZM24.5 18.5C24.5 19.3284 23.8284 20 23 20C22.1716 20 21.5 19.3284 21.5 18.5C21.5 17.6716 22.1716 17 23 17C23.8284 17 24.5 17.6716 24.5 18.5ZM17 20C17.8284 20 18.5 19.3284 18.5 18.5C18.5 17.6716 17.8284 17 17 17C16.1716 17 15.5 17.6716 15.5 18.5C15.5 19.3284 16.1716 20 17 20ZM25.5 23.5C24.6716 23.5 24 22.8284 24 22C24 21.1716 24.6716 20.5 25.5 20.5C26.3284 20.5 27 21.1716 27 22C27 22.8284 26.3284 23.5 25.5 23.5ZM14.5 23.5C13.6716 23.5 13 22.8284 13 22C13 21.1716 13.6716 20.5 14.5 20.5C15.3284 20.5 16 21.1716 16 22C16 22.8284 15.3284 23.5 14.5 23.5Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold mb-1">微信支付</span>
+                            <span class="text-xs text-gray-400">便捷的中国支付方式</span>
+                        </button>
+                        
+                        <button onclick="connectWallet('alipay')" class="flex flex-col items-center p-4 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors card-hover">
+                            <div class="wallet-icon alipay-icon">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 40 40" fill="none">
+                                    <rect width="40" height="40" rx="8" fill="#1677FF"/>
+                                    <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10ZM16.5 22.5C16.5 21.6716 17.1716 21 18 21C18.8284 21 19.5 21.6716 19.5 22.5C19.5 23.3284 18.8284 24 18 24C17.1716 24 16.5 23.3284 16.5 22.5ZM22 24C22.8284 24 23.5 23.3284 23.5 22.5C23.5 21.6716 22.8284 21 22 21C21.1716 21 20.5 21.6716 20.5 22.5C20.5 23.3284 21.1716 24 22 24Z" fill="white"/>
+                                    <path d="M18 18C18.8284 18 19.5 17.3284 19.5 16.5C19.5 15.6716 18.8284 15 18 15C17.1716 15 16.5 15.6716 16.5 16.5C16.5 17.3284 17.1716 18 18 18Z" fill="white"/>
+                                    <path d="M22 18C22.8284 18 23.5 17.3284 23.5 16.5C23.5 15.6716 22.8284 15 22 15C21.1716 15 20.5 15.6716 20.5 16.5C20.5 17.3284 21.1716 18 22 18Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <span class="font-semibold mb-1">支付宝</span>
+                            <span class="text-xs text-gray-400">中国领先的支付平台</span>
+                        </button>
+                    </div>
+                    
+                    <div class="border-t border-gray-800 pt-6">
+                        <p class="text-sm text-gray-400 mb-4">连接钱包后，您可以：</p>
+                        <ul class="space-y-2 text-sm text-gray-300">
                             <li class="flex items-start">
-                                <span class="text-[#00D4AA] mr-2">•</span>
-                                <span>投资RWA资产和碳信用额</span>
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>查看和管理您的数字资产</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-[#00D4AA] mr-2">•</span>
-                                <span>参与零碳众筹项目</span>
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>参与咖啡RWA资产投资</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-[#00D4AA] mr-2">•</span>
-                                <span>交易烘焙曲线IP NFT</span>
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>交易碳信用额和IP NFTs</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-[#00D4AA] mr-2">•</span>
-                                <span>接收REITs分红和奖励</span>
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>获得REITs平台分红</span>
                             </li>
                         </ul>
                     </div>
-                </div>
-                
-                <!-- 加载状态 -->
-                <div id="wallet-loading-section" class="hidden">
-                    <div class="flex flex-col items-center justify-center py-12">
-                        <div class="loading-spinner mb-4"></div>
-                        <p class="font-medium">正在连接钱包...</p>
-                        <p class="text-sm text-gray-400 mt-2">请确认钱包连接请求</p>
-                    </div>
-                </div>
-                
-                <!-- 微信支付二维码扫描 -->
-                <div id="wechat-qr-section" class="hidden">
-                    <div class="text-center mb-6">
-                        <div class="h-16 w-16 rounded-full bg-gradient-to-br from-green-500 to-[#07C160] flex items-center justify-center mx-auto mb-4">
-                            <svg class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.5 12.5c0 1.933 2.067 3.5 4 3.5 1.933 0 4-1.567 4-3.5s-2.067-3.5-4-3.5c-1.933 0-4 1.567-4 3.5z"/>
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">微信支付连接</h3>
-                        <p class="text-gray-400">使用微信扫描二维码完成连接</p>
-                    </div>
-                    
-                    <div class="qr-code-container">
-                        <div class="qr-code-placeholder">
-                            <span class="text-gray-800 font-bold text-sm">微信支付二维码</span>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center mt-6">
-                        <p class="text-sm text-gray-400 mb-4">打开微信，点击右上角"+"，选择"扫一扫"，扫描上方二维码</p>
-                        <div class="flex justify-center space-x-4">
-                            <button onclick="closeWechatQR()" class="px-6 py-2 border border-gray-600 text-gray-300 rounded-full hover:bg-gray-800 transition-colors">
-                                取消
-                            </button>
-                            <button onclick="simulateWechatScan()" class="px-6 py-2 bg-gradient-to-r from-green-500 to-[#07C160] text-white rounded-full hover:opacity-90 transition-opacity">
-                                模拟扫描
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 支付宝二维码扫描 -->
-                <div id="alipay-qr-section" class="hidden">
-                    <div class="text-center mb-6">
-                        <div class="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-[#0071F0] flex items-center justify-center mx-auto mb-4">
-                            <svg class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                                <path d="M7 7h10v10H7z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">支付宝连接</h3>
-                        <p class="text-gray-400">使用支付宝扫描二维码完成连接</p>
-                    </div>
-                    
-                    <div class="qr-code-container">
-                        <div class="qr-code-placeholder">
-                            <span class="text-gray-800 font-bold text-sm">支付宝二维码</span>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center mt-6">
-                        <p class="text-sm text-gray-400 mb-4">打开支付宝，点击"扫一扫"，扫描上方二维码</p>
-                        <div class="flex justify-center space-x-4">
-                            <button onclick="closeAlipayQR()" class="px-6 py-2 border border-gray-600 text-gray-300 rounded-full hover:bg-gray-800 transition-colors">
-                                取消
-                            </button>
-                            <button onclick="simulateAlipayScan()" class="px-6 py-2 bg-gradient-to-r from-blue-500 to-[#0071F0] text-white rounded-full hover:opacity-90 transition-opacity">
-                                模拟扫描
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 钱包连接底部 -->
-            <div class="border-t border-gray-800 px-6 py-4 rounded-b-2xl">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center text-sm text-gray-400">
-                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                        <span>安全连接 · 无需共享私钥</span>
-                    </div>
-                    <a href="#" class="text-sm text-[#00D4AA] hover:text-[#00D4AA]/80 transition-colors">
-                        需要帮助？
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 主要内容区域 -->
-    <!-- 注意：由于代码长度限制，这里只保留主要内容区域的结构框架，实际代码应与原代码完全相同 -->
     <main class="container mx-auto px-4 py-8">
         <!-- Dashboard 页面 -->
         <div id="dashboard" class="page active space-y-8 fade-in">
@@ -721,7 +408,6 @@
 
             <!-- 统计卡片网格 -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- 卡片内容保持不变 -->
                 <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
                     <div class="flex items-center justify-between">
                         <div>
@@ -1032,55 +718,1779 @@
             </div>
         </div>
 
-        <!-- 其他页面内容保持不变 -->
         <!-- Upstream 页面 -->
         <div id="upstream" class="page space-y-8">
-            <!-- 页面内容与原代码相同 -->
             <div class="space-y-2">
                 <h1 class="text-3xl font-bold tracking-tight">上游：资产创建层</h1>
                 <p class="text-gray-400">雾化水培农业 & 实物资产代币化</p>
             </div>
-            <!-- 其余内容保持不变 -->
+
+            <!-- 水培农场概览 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold">水培农场性能</h2>
+                        <div class="flex items-center text-[#00D4AA]">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                            </svg>
+                            <span>实时物联网监测</span>
+                        </div>
+                    </div>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 800 300">
+                            <!-- 区域图 -->
+                            <defs>
+                                <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#00D4AA" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/>
+                                </linearGradient>
+                                <linearGradient id="areaGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#1D9BF0" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#1D9BF0" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- 网格线 -->
+                            <line x1="50" y1="50" x2="750" y2="50" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="150" x2="750" y2="150" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="1" />
+                            <line x1="50" y1="50" x2="50" y2="250" stroke="#374151" stroke-width="1" />
+                            
+                            <!-- 区域填充 -->
+                            <polygon points="100,180 150,150 200,120 250,100 300,80 350,100 400,120 450,140 500,120 550,100 600,80 650,90 700,70 700,250 100,250" 
+                                    fill="url(#areaGradient)" />
+                            <polygon points="100,220 150,200 200,180 250,160 300,140 350,120 400,100 450,90 500,80 550,70 600,60 650,50 700,40 700,250 100,250" 
+                                    fill="url(#areaGradient2)" />
+                            
+                            <!-- 数据线 -->
+                            <polyline points="100,180 150,150 200,120 250,100 300,80 350,100 400,120 450,140 500,120 550,100 600,80 650,90 700,70" 
+                                     fill="none" stroke="#00D4AA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="100,220 150,200 200,180 250,160 300,140 350,120 400,100 450,90 500,80 550,70 600,60 650,50 700,40" 
+                                     fill="none" stroke="#1D9BF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            
+                            <!-- X轴标签 -->
+                            <text x="100" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周一</text>
+                            <text x="200" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周二</text>
+                            <text x="300" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周三</text>
+                            <text x="400" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周四</text>
+                            <text x="500" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周五</text>
+                            <text x="600" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周六</text>
+                            <text x="700" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">周日</text>
+                            
+                            <!-- 图例 -->
+                            <circle cx="100" cy="30" r="5" fill="#00D4AA" />
+                            <text x="120" y="35" fill="#9CA3AF" font-size="12">产量 (kg/天)</text>
+                            <circle cx="300" cy="30" r="5" fill="#1D9BF0" />
+                            <text x="320" y="35" fill="#9CA3AF" font-size="12">效率 (%)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- RWA铸造状态 -->
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h2 class="text-xl font-semibold mb-6">RWA铸造状态</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">咖啡豆RWA</p>
+                                    <p class="text-sm text-gray-400">数字孪生资产</p>
+                                </div>
+                            </div>
+                            <span class="font-mono font-bold text-[#00D4AA]">1,245 吨</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-[#1D9BF0] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">碳信用额</p>
+                                    <p class="text-sm text-gray-400">已验证抵消</p>
+                                </div>
+                            </div>
+                            <span class="font-mono font-bold text-[#1D9BF0]">18.5K tCO₂</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-cyan-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">节水</p>
+                                    <p class="text-sm text-gray-400">对比传统农场</p>
+                                </div>
+                            </div>
+                            <span class="font-mono font-bold text-cyan-400">-85%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 农场列表 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <h2 class="text-xl font-semibold mb-6">全球水培农场网络</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-sm text-gray-400">HF-001</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-900/30 text-green-400">
+                                活跃
+                            </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <span class="font-medium">东京城市农场</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">产能</span>
+                                    <span class="font-medium">95%</span>
+                                </div>
+                                <div class="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#00D4AA] to-cyan-400 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">碳评分</span>
+                                    <span class="font-medium text-[#00D4AA]">98</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-sm text-gray-400">HF-002</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-900/30 text-green-400">
+                                活跃
+                            </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <span class="font-medium">大阪垂直农场</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">产能</span>
+                                    <span class="font-medium">88%</span>
+                                </div>
+                                <div class="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#00D4AA] to-cyan-400 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">碳评分</span>
+                                    <span class="font-medium text-[#00D4AA]">96</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-sm text-gray-400">HF-003</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-900/30 text-yellow-400">
+                                部署中
+                            </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <span class="font-medium">新加坡中心</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">产能</span>
+                                    <span class="font-medium">45%</span>
+                                </div>
+                                <div class="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#00D4AA] to-cyan-400 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">碳评分</span>
+                                    <span class="font-medium text-yellow-400">94</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-sm text-gray-400">HF-004</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-400">
+                                计划中
+                            </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <span class="font-medium">柏林中心</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">产能</span>
+                                    <span class="font-medium">0%</span>
+                                </div>
+                                <div class="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#00D4AA] to-cyan-400 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">碳评分</span>
+                                    <span class="font-medium text-gray-400">未评估</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 资产代币化流程 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <h2 class="text-xl font-semibold mb-6">资产代币化流程</h2>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="relative">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center">
+                                <svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                            </div>
+                            <div class="hidden md:block absolute top-6 left-3/4 w-full h-0.5 bg-gradient-to-r from-[#00D4AA] to-transparent"></div>
+                        </div>
+                        <h3 class="font-semibold mb-1">采集</h3>
+                        <p class="text-sm text-gray-400">雾化水培采集</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="relative">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center">
+                                <svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <div class="hidden md:block absolute top-6 left-3/4 w-full h-0.5 bg-gradient-to-r from-[#00D4AA] to-transparent"></div>
+                        </div>
+                        <h3 class="font-semibold mb-1">验证</h3>
+                        <p class="text-sm text-gray-400">品质与碳足迹认证</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="relative">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center">
+                                <svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                                </svg>
+                            </div>
+                            <div class="hidden md:block absolute top-6 left-3/4 w-full h-0.5 bg-gradient-to-r from-[#00D4AA] to-transparent"></div>
+                        </div>
+                        <h3 class="font-semibold mb-1">数字化</h3>
+                        <p class="text-sm text-gray-400">创建数字孪生</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="relative">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center">
+                                <svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <div class="hidden md:block absolute top-6 left-3/4 w-full h-0.5 bg-gradient-to-r from-[#00D4AA] to-transparent"></div>
+                        </div>
+                        <h3 class="font-semibold mb-1">代币化</h3>
+                        <p class="text-sm text-gray-400">发行 RWA 代币</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="relative">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center">
+                                <svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold mb-1">上链</h3>
+                        <p class="text-sm text-gray-400">上链交易</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Midstream 页面 -->
         <div id="midstream" class="page space-y-8">
-            <!-- 页面内容与原代码相同 -->
             <div class="space-y-2">
                 <h1 class="text-3xl font-bold tracking-tight">中游：数字化资产市场</h1>
                 <p class="text-gray-400">知识产权交易 & 碳指标市场</p>
             </div>
-            <!-- 其余内容保持不变 -->
+
+            <!-- 市场概览 -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">咖啡RWA</p>
+                            <p class="text-2xl font-bold mt-2">1.2M</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-green-900/20">
+                            <svg class="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">平均价格</span>
+                        <span class="font-mono font-semibold">$125/单位</span>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+8.5%</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">碳信用额</p>
+                            <p class="text-2xl font-bold mt-2">18.5K</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-blue-900/20">
+                            <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">平均价格</span>
+                        <span class="font-mono font-semibold">$85/tCO₂</span>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+12.3%</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">IP NFTs</p>
+                            <p class="text-2xl font-bold mt-2">342</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-yellow-900/20">
+                            <svg class="h-6 w-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">平均价格</span>
+                        <span class="font-mono font-semibold">$8.5K 平均</span>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+24.7%</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">REITs代币</p>
+                            <p class="text-2xl font-bold mt-2">45.2K</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-purple-900/20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">平均价格</span>
+                        <span class="font-mono font-semibold">$42.50</span>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+5.8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交易图表 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">实时交易量</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 800 300">
+                            <!-- 网格线 -->
+                            <line x1="50" y1="50" x2="750" y2="50" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="150" x2="750" y2="150" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="1" />
+                            <line x1="50" y1="50" x2="50" y2="250" stroke="#374151" stroke-width="1" />
+                            
+                            <!-- 数据线 -->
+                            <polyline points="100,200 150,180 200,160 250,140 300,120 350,140 400,160 450,140 500,120 550,100 600,80 650,100 700,120" 
+                                     fill="none" stroke="#00D4AA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="100,220 150,200 200,180 250,160 300,140 350,120 400,100 450,110 500,120 550,130 600,140 650,150 700,160" 
+                                     fill="none" stroke="#1D9BF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            
+                            <!-- 数据点 -->
+                            <circle cx="100" cy="200" r="4" fill="#00D4AA" />
+                            <circle cx="150" cy="180" r="4" fill="#00D4AA" />
+                            <circle cx="200" cy="160" r="4" fill="#00D4AA" />
+                            <circle cx="250" cy="140" r="4" fill="#00D4AA" />
+                            <circle cx="300" cy="120" r="4" fill="#00D4AA" />
+                            <circle cx="350" cy="140" r="4" fill="#00D4AA" />
+                            <circle cx="400" cy="160" r="4" fill="#00D4AA" />
+                            <circle cx="450" cy="140" r="4" fill="#00D4AA" />
+                            <circle cx="500" cy="120" r="4" fill="#00D4AA" />
+                            <circle cx="550" cy="100" r="4" fill="#00D4AA" />
+                            <circle cx="600" cy="80" r="4" fill="#00D4AA" />
+                            <circle cx="650" cy="100" r="4" fill="#00D4AA" />
+                            <circle cx="700" cy="120" r="4" fill="#00D4AA" />
+                            
+                            <!-- X轴标签 -->
+                            <text x="100" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">09:00</text>
+                            <text x="250" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">11:00</text>
+                            <text x="400" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">13:00</text>
+                            <text x="550" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">15:00</text>
+                            <text x="700" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">17:00</text>
+                            
+                            <!-- 图例 -->
+                            <circle cx="100" cy="30" r="5" fill="#00D4AA" />
+                            <text x="120" y="35" fill="#9CA3AF" font-size="12">交易量 (单位)</text>
+                            <circle cx="350" cy="30" r="5" fill="#1D9BF0" />
+                            <text x="370" y="35" fill="#9CA3AF" font-size="12">价格 ($)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">市场深度</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 800 300">
+                            <!-- 柱状图 -->
+                            <rect x="100" y="150" width="40" height="100" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="160" y="170" width="40" height="80" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="220" y="130" width="40" height="120" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="280" y="190" width="40" height="60" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="340" y="110" width="40" height="140" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="400" y="90" width="40" height="160" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="460" y="150" width="40" height="100" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="520" y="170" width="40" height="80" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="580" y="130" width="40" height="120" fill="#00D4AA" fill-opacity="0.8" />
+                            <rect x="640" y="190" width="40" height="60" fill="#00D4AA" fill-opacity="0.8" />
+                            
+                            <!-- 网格线 -->
+                            <line x1="50" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="1" />
+                            <line x1="50" y1="50" x2="50" y2="250" stroke="#374151" stroke-width="1" />
+                            
+                            <!-- X轴标签 -->
+                            <text x="120" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">09:00</text>
+                            <text x="240" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">10:00</text>
+                            <text x="360" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">11:00</text>
+                            <text x="480" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">12:00</text>
+                            <text x="600" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">13:00</text>
+                            <text x="720" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">14:00</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 近期交易 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold">近期交易</h3>
+                    <div class="flex space-x-3">
+                        <button class="flex items-center px-4 py-2 bg-[#00D4AA] text-black rounded-full font-medium hover:bg-[#00D4AA]/90" onclick="buyAssets()">
+                            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                            </svg>
+                            购买资产
+                        </button>
+                        <button class="flex items-center px-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-full font-medium hover:bg-[#00D4AA]/10" onclick="listAssets()">
+                            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            列出资产
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 rounded-lg bg-green-900/20">
+                                <span class="text-xs font-medium text-green-400">购买</span>
+                            </div>
+                            <div>
+                                <p class="font-mono font-medium">RWA-0424-001</p>
+                                <p class="text-sm text-gray-400">AlphaFund ↔ HydroFarm</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-mono font-bold">$125K</p>
+                            <p class="text-sm text-gray-400">10分钟前</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 rounded-lg bg-blue-900/20">
+                                <span class="text-xs font-medium text-blue-400">交易</span>
+                            </div>
+                            <div>
+                                <p class="font-mono font-medium">CARBON-0312</p>
+                                <p class="text-sm text-gray-400">EcoCorp ↔ GreenChain</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-mono font-bold">250 tCO₂</p>
+                            <p class="text-sm text-gray-400">25分钟前</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 rounded-lg bg-purple-900/20">
+                                <span class="text-xs font-medium text-purple-400">授权</span>
+                            </div>
+                            <div>
+                                <p class="font-mono font-medium">ROAST-IP-007</p>
+                                <p class="text-sm text-gray-400">CafeMaster ↔ RoastLabs</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-mono font-bold">$12.5K</p>
+                            <p class="text-sm text-gray-400">42分钟前</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-800 rounded-lg transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 rounded-lg bg-yellow-900/20">
+                                <span class="text-xs font-medium text-yellow-400">分红</span>
+                            </div>
+                            <div>
+                                <p class="font-mono font-medium">REIT-TOKYO-01</p>
+                                <p class="text-sm text-gray-400">RetailInvestor ↔ JEBI Fund</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-mono font-bold">1,200 单位</p>
+                            <p class="text-sm text-gray-400">1小时前</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 烘焙曲线IP市场 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <h3 class="text-lg font-semibold mb-6">烘焙曲线IP市场</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">埃塞俄比亚日出</h4>
+                                <p class="text-sm text-gray-400">by MasterRoast</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-sm font-medium">
+                                IP NFT
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">授权价格</span>
+                                <span class="font-mono font-bold">$12,500</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">版税费率</span>
+                                <span class="font-mono font-bold">5%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">总授权数</span>
+                                <span class="font-mono font-bold">142</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-2 bg-gradient-to-r from-[#00D4AA] to-cyan-400 text-black font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="purchaseLicense('埃塞俄比亚日出')">
+                            购买授权
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">哥伦比亚黄金</h4>
+                                <p class="text-sm text-gray-400">by CafeTech</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-sm font-medium">
+                                IP NFT
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">授权价格</span>
+                                <span class="font-mono font-bold">$8,900</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">版税费率</span>
+                                <span class="font-mono font-bold">3.5%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">总授权数</span>
+                                <span class="font-mono font-bold">98</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-2 bg-gradient-to-r from-[#00D4AA] to-cyan-400 text-black font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="purchaseLicense('哥伦比亚黄金')">
+                            购买授权
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">巴西塞拉多</h4>
+                                <p class="text-sm text-gray-400">by RoastAI</p>
+                            </div>
+                            <span class="px-3 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-sm font-medium">
+                                IP NFT
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">授权价格</span>
+                                <span class="font-mono font-bold">$15,200</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">版税费率</span>
+                                <span class="font-mono font-bold">6%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">总授权数</span>
+                                <span class="font-mono font-bold">67</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-2 bg-gradient-to-r from-[#00D4AA] to-cyan-400 text-black font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="purchaseLicense('巴西塞拉多')">
+                            购买授权
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Downstream 页面 -->
         <div id="downstream" class="page space-y-8">
-            <!-- 页面内容与原代码相同 -->
             <div class="space-y-2">
                 <h1 class="text-3xl font-bold tracking-tight">下游：零碳消费体验</h1>
                 <p class="text-gray-400">消费与投资融合的生态圈</p>
             </div>
-            <!-- 其余内容保持不变 -->
+
+            <!-- Zero碳门店网络 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">JEBI Zero 碳门店</h2>
+                    <div class="flex items-center text-[#00D4AA]">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span>全球网络: 24家门店</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="font-bold">东京</h3>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">日均客流量</span>
+                                <span class="font-semibold">1,250</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">客户评分</span>
+                                <div class="flex items-center">
+                                    <svg class="h-4 w-4 text-yellow-400 fill-current mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <span class="font-semibold">4.8</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">碳抵消率</span>
+                                <span class="font-semibold text-[#00D4AA]">95%</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg font-medium hover:bg-[#00D4AA]/10 transition-colors" onclick="visitStore('东京')">
+                            访问门店
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="font-bold">新加坡</h3>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">日均客流量</span>
+                                <span class="font-semibold">980</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">客户评分</span>
+                                <div class="flex items-center">
+                                    <svg class="h-4 w-4 text-yellow-400 fill-current mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <span class="font-semibold">4.7</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">碳抵消率</span>
+                                <span class="font-semibold text-[#00D4AA]">92%</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg font-medium hover:bg-[#00D4AA]/10 transition-colors" onclick="visitStore('新加坡')">
+                            访问门店
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="font-bold">柏林</h3>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">日均客流量</span>
+                                <span class="font-semibold">870</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">客户评分</span>
+                                <div class="flex items-center">
+                                    <svg class="h-4 w-4 text-yellow-400 fill-current mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <span class="font-semibold">4.6</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">碳抵消率</span>
+                                <span class="font-semibold text-yellow-400">89%</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg font-medium hover:bg-[#00D4AA]/10 transition-colors" onclick="visitStore('柏林')">
+                            访问门店
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-4 w-4 text-[#00D4AA] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="font-bold">旧金山</h3>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">日均客流量</span>
+                                <span class="font-semibold">1,100</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">客户评分</span>
+                                <div class="flex items-center">
+                                    <svg class="h-4 w-4 text-yellow-400 fill-current mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <span class="font-semibold">4.9</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">碳抵消率</span>
+                                <span class="font-semibold text-[#00D4AA]">96%</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg font-medium hover:bg-[#00D4AA]/10 transition-colors" onclick="visitStore('旧金山')">
+                            访问门店
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 碳消费统计 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">按资产类型的碳消费</h3>
+                        <div class="h-64 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 400 300">
+                                <!-- 环形图 -->
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="#1F2937" stroke-width="40" />
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="#00D4AA" stroke-width="40" 
+                                        stroke-dasharray="251.2" stroke-dashoffset="150.72" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="#1D9BF0" stroke-width="40" 
+                                        stroke-dasharray="251.2" stroke-dashoffset="188.4" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="#FFD700" stroke-width="40" 
+                                        stroke-dasharray="251.2" stroke-dashoffset="213.52" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="#8B5CF6" stroke-width="40" 
+                                        stroke-dasharray="251.2" stroke-dashoffset="200.96" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                                
+                                <text x="200" y="150" text-anchor="middle" fill="white" font-size="24" font-weight="bold">65%</text>
+                                <text x="200" y="180" text-anchor="middle" fill="#9CA3AF" font-size="14">碳中和</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">消费者参与度</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                                <div>
+                                    <p class="font-medium">碳信用额兑换</p>
+                                    <p class="text-2xl font-bold mt-1">8,542</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[#00D4AA] text-sm font-medium">+24%</span>
+                                    <p class="text-xs text-gray-400">环比上月</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                                <div>
+                                    <p class="font-medium">RWA资产投资者</p>
+                                    <p class="text-2xl font-bold mt-1">3,215</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[#00D4AA] text-sm font-medium">+45%</span>
+                                    <p class="text-xs text-gray-400">环比上月</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                                <div>
+                                    <p class="font-medium">门店会员</p>
+                                    <p class="text-2xl font-bold mt-1">12,845</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[#00D4AA] text-sm font-medium">+18%</span>
+                                    <p class="text-xs text-gray-400">环比上月</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                                <div>
+                                    <p class="font-medium">移动应用用户</p>
+                                    <p class="text-2xl font-bold mt-1">25,689</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[#00D4AA] text-sm font-medium">+32%</span>
+                                    <p class="text-xs text-gray-400">环比上月</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 众筹平台 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">零碳众筹平台</h2>
+                    <div class="flex items-center text-[#1D9BF0]">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.67 3.645a21.668 21.668 0 01-.67 4.155m0 0A21.672 21.672 0 0112 21c-3.147 0-6.065-.97-8.5-2.625m16.5 0c.218.376.418.764.5 1.15m0 0c-.218.376-.418.764-.5 1.15m16.5 0a21.65 21.65 0 01-4.5 1.65" />
+                        </svg>
+                        <span>社区投资者: 8,542</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 rounded-xl p-5">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 bg-[#00D4AA]/20 text-[#00D4AA] rounded-full text-sm font-medium mb-2 inline-block">
+                                基础设施
+                            </span>
+                            <h3 class="font-bold text-lg mb-2">东京垂直农场扩建</h3>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">融资进度</span>
+                                    <span class="font-medium">85%</span>
+                                </div>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#00D4AA] to-cyan-400" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <p class="text-sm text-gray-400">目标</p>
+                                    <p class="font-bold">$500K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">已筹集</p>
+                                    <p class="font-bold text-[#00D4AA]">$425K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">投资者</p>
+                                    <p class="font-bold">342</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">剩余天数</p>
+                                    <p class="font-bold">15</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-3 bg-gradient-to-r from-[#1D9BF0] to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="investNow('东京垂直农场')">
+                            立即投资
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-5">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 bg-blue-900/20 text-blue-400 rounded-full text-sm font-medium mb-2 inline-block">
+                                R&D项目
+                            </span>
+                            <h3 class="font-bold text-lg mb-2">新烘焙曲线IP</h3>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">融资进度</span>
+                                    <span class="font-medium">65%</span>
+                                </div>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-[#1D9BF0] to-blue-400" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <p class="text-sm text-gray-400">目标</p>
+                                    <p class="font-bold">$150K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">已筹集</p>
+                                    <p class="font-bold text-[#1D9BF0]">$98K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">投资者</p>
+                                    <p class="font-bold">128</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">剩余天数</p>
+                                    <p class="font-bold">28</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-3 bg-gradient-to-r from-[#1D9BF0] to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="investNow('烘焙曲线IP')">
+                            立即投资
+                        </button>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-5">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 bg-purple-900/20 text-purple-400 rounded-full text-sm font-medium mb-2 inline-block">
+                                零售扩张
+                            </span>
+                            <h3 class="font-bold text-lg mb-2">柏林零碳门店</h3>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">融资进度</span>
+                                    <span class="font-medium">83%</span>
+                                </div>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: 83%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <p class="text-sm text-gray-400">目标</p>
+                                    <p class="font-bold">$750K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">已筹集</p>
+                                    <p class="font-bold text-purple-400">$620K</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">投资者</p>
+                                    <p class="font-bold">456</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">剩余天数</p>
+                                    <p class="font-bold">7</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-3 bg-gradient-to-r from-[#1D9BF0] to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" onclick="investNow('柏林门店')">
+                            立即投资
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 购物中心体验 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <h3 class="text-lg font-semibold mb-6">零碳商场体验</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-gradient-to-br from-[#0A2F2C] to-gray-900 rounded-xl p-6">
+                        <h4 class="text-xl font-bold mb-2">生态购物区</h4>
+                        <p class="text-gray-300 mb-4">
+                            沉浸式零售环境，展示从农场到杯子的完整咖啡价值链。
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">24</p>
+                                <p class="text-sm text-gray-400">门店</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">95%</p>
+                                <p class="text-sm text-gray-400">可再生能源</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">零</p>
+                                <p class="text-sm text-gray-400">废料政策</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <h4 class="font-bold mb-4">数字体验</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center p-3 bg-gray-900/50 rounded-lg">
+                                <svg class="h-5 w-5 text-[#00D4AA] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">碳信用额支付</p>
+                                    <p class="text-sm text-gray-400">使用赚取的信用额进行购买</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-900/50 rounded-lg">
+                                <svg class="h-5 w-5 text-yellow-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">现场烘焙体验</p>
+                                    <p class="text-sm text-gray-400">互动式咖啡教育</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-900/50 rounded-lg">
+                                <svg class="h-5 w-5 text-cyan-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium">AR农场之旅</p>
+                                    <p class="text-sm text-gray-400">虚拟水培农场体验</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- REITs 页面 -->
         <div id="reits" class="page space-y-8">
-            <!-- 页面内容与原代码相同 -->
             <div class="space-y-2">
                 <h1 class="text-3xl font-bold tracking-tight">REITs平台：资产证券化</h1>
                 <p class="text-gray-400">不动产证券化与代币化投资</p>
             </div>
-            <!-- 其余内容保持不变 -->
+
+            <!-- REIT概览 -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400">总资产净值</p>
+                            <p class="text-2xl font-bold mt-2">$42.8M</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-gray-800">
+                            <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-[#00D4AA] flex items-center">
+                        <span>+12.5%</span>
+                        <span class="ml-2 text-gray-400">环比上季度</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400">年化收益率</p>
+                            <p class="text-2xl font-bold mt-2">7.2%</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-gray-800">
+                            <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-[#00D4AA] flex items-center">
+                        <span>+0.8%</span>
+                        <span class="ml-2 text-gray-400">环比上季度</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400">物业资产</p>
+                            <p class="text-2xl font-bold mt-2">24</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-gray-800">
+                            <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-[#00D4AA] flex items-center">
+                        <span>+3</span>
+                        <span class="ml-2 text-gray-400">环比上季度</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400">投资者</p>
+                            <p class="text-2xl font-bold mt-2">4,852</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-gray-800">
+                            <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.67 3.645a21.668 21.668 0 01-.67 4.155m0 0A21.672 21.672 0 0112 21c-3.147 0-6.065-.97-8.5-2.625m16.5 0c.218.376.418.764.5 1.15m0 0c-.218.376-.418.764-.5 1.15m16.5 0a21.65 21.65 0 01-4.5 1.65" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-[#00D4AA] flex items-center">
+                        <span>+428</span>
+                        <span class="ml-2 text-gray-400">环比上季度</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 性能图表 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">REITs性能表现</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 800 300">
+                            <defs>
+                                <linearGradient id="navGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#00D4AA" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/>
+                                </linearGradient>
+                                <linearGradient id="divGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#1D9BF0" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#1D9BF0" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- 区域填充 -->
+                            <polygon points="100,180 150,170 200,160 250,150 300,140 350,130 400,120 450,115 500,110 550,105 600,100 650,95 700,90 700,250 100,250" 
+                                    fill="url(#navGradient)" />
+                            <polygon points="100,220 150,215 200,210 250,205 300,200 350,195 400,190 450,185 500,180 550,175 600,170 650,165 700,160 700,250 100,250" 
+                                    fill="url(#divGradient)" />
+                            
+                            <!-- 网格线 -->
+                            <line x1="50" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="1" />
+                            <line x1="50" y1="50" x2="50" y2="250" stroke="#374151" stroke-width="1" />
+                            
+                            <!-- 数据线 -->
+                            <polyline points="100,180 150,170 200,160 250,150 300,140 350,130 400,120 450,115 500,110 550,105 600,100 650,95 700,90" 
+                                     fill="none" stroke="#00D4AA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="100,220 150,215 200,210 250,205 300,200 350,195 400,190 450,185 500,180 550,175 600,170 650,165 700,160" 
+                                     fill="none" stroke="#1D9BF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            
+                            <!-- X轴标签 -->
+                            <text x="100" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">一月</text>
+                            <text x="250" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">二月</text>
+                            <text x="400" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">三月</text>
+                            <text x="550" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">四月</text>
+                            <text x="700" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">五月</text>
+                            
+                            <!-- 图例 -->
+                            <circle cx="100" cy="30" r="5" fill="#00D4AA" />
+                            <text x="120" y="35" fill="#9CA3AF" font-size="12">资产净值</text>
+                            <circle cx="350" cy="30" r="5" fill="#1D9BF0" />
+                            <text x="370" y="35" fill="#9CA3AF" font-size="12">股息收益率 (%)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">投资组合分布</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 400 300">
+                            <!-- 环形图 -->
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#1F2937" stroke-width="40" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#00D4AA" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="150.72" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#1D9BF0" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="188.4" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#FFD700" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="213.52" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#8B5CF6" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="200.96" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#F97316" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="238.64" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            
+                            <text x="200" y="150" text-anchor="middle" fill="white" font-size="24" font-weight="bold">100%</text>
+                            <text x="200" y="180" text-anchor="middle" fill="#9CA3AF" font-size="14">多元化</text>
+                        </svg>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#00D4AA]"></div>
+                            <span class="text-sm text-gray-400">农业</span>
+                            <span class="text-sm font-medium ml-auto">35%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#1D9BF0]"></div>
+                            <span class="text-sm text-gray-400">零售</span>
+                            <span class="text-sm font-medium ml-auto">25%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#FFD700]"></div>
+                            <span class="text-sm text-gray-400">工业</span>
+                            <span class="text-sm font-medium ml-auto">20%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#8B5CF6]"></div>
+                            <span class="text-sm text-gray-400">物流</span>
+                            <span class="text-sm font-medium ml-auto">15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 物业资产列表 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">代币化物业资产</h2>
+                    <button class="px-6 py-2 bg-[#00D4AA] text-black font-semibold rounded-full hover:bg-[#00D4AA]/90" onclick="investREITs()">
+                        立即投资
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-gray-900">
+                                <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">东京水培农场</h4>
+                                <p class="text-sm text-gray-400">农业</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">物业价值</p>
+                                <p class="font-mono font-bold">$8.2M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">收益率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">7.2%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">入住率</p>
+                                <p class="font-mono font-bold">100%</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg hover:bg-[#00D4AA]/10" onclick="viewProperty('东京水培农场')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-gray-900">
+                                <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">新加坡烘焙中心</h4>
+                                <p class="text-sm text-gray-400">工业</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">物业价值</p>
+                                <p class="font-mono font-bold">$12.5M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">收益率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">6.8%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">入住率</p>
+                                <p class="font-mono font-bold">95%</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg hover:bg-[#00D4AA]/10" onclick="viewProperty('新加坡烘焙中心')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-gray-900">
+                                <svg class="h-6 w-6 text-[#00D4AA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">柏林旗舰店</h4>
+                                <p class="text-sm text-gray-400">零售</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">物业价值</p>
+                                <p class="font-mono font-bold">$6.8M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">收益率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">8.5%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">入住率</p>
+                                <p class="font-mono font-bold">100%</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-[#00D4AA] text-[#00D4AA] rounded-lg hover:bg-[#00D4AA]/10" onclick="viewProperty('柏林旗舰店')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- AI 大脑页面 -->
         <div id="ai" class="page space-y-8">
-            <!-- 页面内容与原代码相同 -->
             <div class="space-y-2">
                 <h1 class="text-3xl font-bold tracking-tight">AI大脑：智能决策引擎</h1>
                 <p class="text-gray-400">机器学习驱动的全产业链优化</p>
             </div>
-            <!-- 其余内容保持不变 -->
+
+            <!-- AI概览 -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">预测准确率</p>
+                            <p class="text-2xl font-bold mt-2">94.7%</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-purple-900/20">
+                            <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+2.3%</span>
+                        <span class="ml-2 text-gray-400">环比上月</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">优化效率</p>
+                            <p class="text-2xl font-bold mt-2">87.5%</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-blue-900/20">
+                            <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+5.2%</span>
+                        <span class="ml-2 text-gray-400">环比上月</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">模型数量</p>
+                            <p class="text-2xl font-bold mt-2">24</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-cyan-900/20">
+                            <svg class="h-6 w-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+4</span>
+                        <span class="ml-2 text-gray-400">环比上月</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400">每日预测</p>
+                            <p class="text-2xl font-bold mt-2">8.5K</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-green-900/20">
+                            <svg class="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-green-400 flex items-center">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span>+18%</span>
+                        <span class="ml-2 text-gray-400">环比上月</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI模型性能 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">AI模型性能趋势</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 800 300">
+                            <!-- 网格线 -->
+                            <line x1="50" y1="50" x2="750" y2="50" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="150" x2="750" y2="150" stroke="#374151" stroke-width="1" stroke-dasharray="5,5" />
+                            <line x1="50" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="1" />
+                            <line x1="50" y1="50" x2="50" y2="250" stroke="#374151" stroke-width="1" />
+                            
+                            <!-- 数据线 -->
+                            <polyline points="100,180 150,190 200,200 250,210 300,220 350,210 400,200 450,190 500,200 550,210 600,220 650,230 700,240" 
+                                     fill="none" stroke="#00D4AA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="100,220 150,210 200,200 250,190 300,180 350,190 400,200 450,210 500,200 550,190 600,180 650,170 700,160" 
+                                     fill="none" stroke="#1D9BF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            
+                            <!-- 数据点 -->
+                            <circle cx="100" cy="180" r="4" fill="#00D4AA" />
+                            <circle cx="150" cy="190" r="4" fill="#00D4AA" />
+                            <circle cx="200" cy="200" r="4" fill="#00D4AA" />
+                            <circle cx="250" cy="210" r="4" fill="#00D4AA" />
+                            <circle cx="300" cy="220" r="4" fill="#00D4AA" />
+                            <circle cx="350" cy="210" r="4" fill="#00D4AA" />
+                            <circle cx="400" cy="200" r="4" fill="#00D4AA" />
+                            <circle cx="450" cy="190" r="4" fill="#00D4AA" />
+                            <circle cx="500" cy="200" r="4" fill="#00D4AA" />
+                            <circle cx="550" cy="210" r="4" fill="#00D4AA" />
+                            <circle cx="600" cy="220" r="4" fill="#00D4AA" />
+                            <circle cx="650" cy="230" r="4" fill="#00D4AA" />
+                            <circle cx="700" cy="240" r="4" fill="#00D4AA" />
+                            
+                            <!-- X轴标签 -->
+                            <text x="100" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">一月</text>
+                            <text x="250" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">二月</text>
+                            <text x="400" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">三月</text>
+                            <text x="550" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">四月</text>
+                            <text x="700" y="270" text-anchor="middle" fill="#9CA3AF" font-size="12">五月</text>
+                            
+                            <!-- 图例 -->
+                            <circle cx="100" cy="30" r="5" fill="#00D4AA" />
+                            <text x="120" y="35" fill="#9CA3AF" font-size="12">准确率 (%)</text>
+                            <circle cx="350" cy="30" r="5" fill="#1D9BF0" />
+                            <text x="370" y="35" fill="#9CA3AF" font-size="12">优化效率 (%)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h3 class="text-lg font-semibold mb-6">AI模型分布</h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 400 300">
+                            <!-- 环形图 -->
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#1F2937" stroke-width="40" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#00D4AA" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="150.72" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#1D9BF0" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="188.4" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#FFD700" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="213.52" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            <circle cx="200" cy="150" r="80" fill="none" stroke="#8B5CF6" stroke-width="40" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="200.96" stroke-linecap="round" transform="rotate(-90 200 150)" />
+                            
+                            <text x="200" y="150" text-anchor="middle" fill="white" font-size="24" font-weight="bold">24</text>
+                            <text x="200" y="180" text-anchor="middle" fill="#9CA3AF" font-size="14">模型总数</text>
+                        </svg>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#00D4AA]"></div>
+                            <span class="text-sm text-gray-400">预测模型</span>
+                            <span class="text-sm font-medium ml-auto">40%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#1D9BF0]"></div>
+                            <span class="text-sm text-gray-400">优化模型</span>
+                            <span class="text-sm font-medium ml-auto">25%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#FFD700]"></div>
+                            <span class="text-sm text-gray-400">识别模型</span>
+                            <span class="text-sm font-medium ml-auto">20%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 rounded-full mr-2 bg-[#8B5CF6]"></div>
+                            <span class="text-sm text-gray-400">决策模型</span>
+                            <span class="text-sm font-medium ml-auto">15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI模型列表 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">AI模型库</h2>
+                    <button class="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:opacity-90" onclick="trainNewModel()">
+                        训练新模型
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-purple-900/30">
+                                <svg class="h-6 w-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">产量预测模型</h4>
+                                <p class="text-sm text-gray-400">预测咖啡豆产量</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">准确率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">96.2%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">训练数据</p>
+                                <p class="font-mono font-bold">2.5M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">更新时间</p>
+                                <p class="font-mono font-bold">3天前</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-purple-400 text-purple-400 rounded-lg hover:bg-purple-900/20" onclick="viewModel('产量预测模型')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-blue-900/30">
+                                <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">价格预测模型</h4>
+                                <p class="text-sm text-gray-400">预测市场价格趋势</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">准确率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">93.5%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">训练数据</p>
+                                <p class="font-mono font-bold">1.8M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">更新时间</p>
+                                <p class="font-mono font-bold">5天前</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-blue-400 text-blue-400 rounded-lg hover:bg-blue-900/20" onclick="viewModel('价格预测模型')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 rounded-lg bg-green-900/30">
+                                <svg class="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">碳足迹优化模型</h4>
+                                <p class="text-sm text-gray-400">优化碳足迹计算</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">准确率</p>
+                                <p class="font-mono font-bold text-[#00D4AA]">95.8%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">训练数据</p>
+                                <p class="font-mono font-bold">3.2M</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400">更新时间</p>
+                                <p class="font-mono font-bold">2天前</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="px-4 py-2 border border-green-400 text-green-400 rounded-lg hover:bg-green-900/20" onclick="viewModel('碳足迹优化模型')">
+                                    查看详情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI预测模块 -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 card-hover">
+                <h3 class="text-lg font-semibold mb-6">实时AI预测</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-purple-900/20 to-gray-900 rounded-xl p-5">
+                        <div class="flex items-center mb-4">
+                            <svg class="h-5 w-5 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h4 class="font-bold">产量预测</h4>
+                        </div>
+                        <p class="text-2xl font-bold mb-2">+12.5%</p>
+                        <p class="text-sm text-gray-400 mb-4">下季度预计增长</p>
+                        <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-900/20 to-gray-900 rounded-xl p-5">
+                        <div class="flex items-center mb-4">
+                            <svg class="h-5 w-5 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h4 class="font-bold">价格预测</h4>
+                        </div>
+                        <p class="text-2xl font-bold mb-2">+8.2%</p>
+                        <p class="text-sm text-gray-400 mb-4">下月预计增长</p>
+                        <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-900/20 to-gray-900 rounded-xl p-5">
+                        <div class="flex items-center mb-4">
+                            <svg class="h-5 w-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <h4 class="font-bold">碳信用预测</h4>
+                        </div>
+                        <p class="text-2xl font-bold mb-2">15.2K</p>
+                        <p class="text-sm text-gray-400 mb-4">下季度预计生成</p>
+                        <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-green-500 to-[#00D4AA]" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -1178,12 +2588,6 @@
 
     <!-- JavaScript代码 -->
     <script>
-        // 钱包状态管理
-        let isWalletConnected = false;
-        let currentWalletType = "wechat"; // 默认微信钱包
-        let currentWalletAddress = "微信用户_15800222338";
-        let currentNetwork = "JEBI支付网络";
-        
         // 页面切换函数
         function showPage(pageId) {
             // 隐藏所有页面
@@ -1217,225 +2621,50 @@
             });
         }
         
-        // 钱包模态框函数
-        function openWalletModal() {
-            const modal = document.getElementById('wallet-modal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // 根据连接状态显示相应内容
-            updateWalletModalContent();
-        }
-        
-        function closeWalletModal() {
-            const modal = document.getElementById('wallet-modal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        function updateWalletModalContent() {
-            const connectedSection = document.getElementById('wallet-connected-section');
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const loadingSection = document.getElementById('wallet-loading-section');
-            const wechatQRSection = document.getElementById('wechat-qr-section');
-            const alipayQRSection = document.getElementById('alipay-qr-section');
-            
-            // 隐藏所有部分
-            connectedSection.classList.add('hidden');
-            disconnectedSection.classList.add('hidden');
-            loadingSection.classList.add('hidden');
-            wechatQRSection.classList.add('hidden');
-            alipayQRSection.classList.add('hidden');
-            
-            // 显示相应部分
-            if (isWalletConnected) {
-                connectedSection.classList.remove('hidden');
-                document.getElementById('connected-wallet-address').textContent = currentWalletAddress;
-                
-                // 根据钱包类型更新UI
-                const walletIcon = document.getElementById('connected-wallet-icon');
-                const walletTypeBadge = document.getElementById('connected-wallet-type');
-                
-                if (currentWalletType === 'wechat') {
-                    walletIcon.className = 'h-10 w-10 rounded-full bg-gradient-to-br from-[#07C160] to-green-400 flex items-center justify-center mr-3';
-                    walletTypeBadge.textContent = '微信钱包';
-                    walletTypeBadge.className = 'payment-badge payment-badge-wechat ml-2';
-                } else if (currentWalletType === 'alipay') {
-                    walletIcon.className = 'h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-[#0071F0] flex items-center justify-center mr-3';
-                    walletTypeBadge.textContent = '支付宝钱包';
-                    walletTypeBadge.className = 'payment-badge payment-badge-alipay ml-2';
-                } else {
-                    // 区块链钱包
-                    walletIcon.className = 'h-10 w-10 rounded-full bg-gradient-to-br from-[#00D4AA] to-[#1D9BF0] flex items-center justify-center mr-3';
-                    walletTypeBadge.textContent = '区块链钱包';
-                    walletTypeBadge.className = 'payment-badge payment-badge-wechat ml-2';
-                }
-            } else {
-                disconnectedSection.classList.remove('hidden');
-            }
-        }
-        
-        // 连接钱包函数
+        // 钱包连接函数
         function connectWallet(walletType) {
-            // 显示加载状态
-            const connectedSection = document.getElementById('wallet-connected-section');
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const loadingSection = document.getElementById('wallet-loading-section');
+            const walletNames = {
+                'metamask': 'MetaMask',
+                'coinbase': 'Coinbase Wallet',
+                'walletconnect': 'WalletConnect',
+                'wechat': '微信支付',
+                'alipay': '支付宝'
+            };
             
-            connectedSection.classList.add('hidden');
-            disconnectedSection.classList.add('hidden');
-            loadingSection.classList.remove('hidden');
+            const walletAddress = generateWalletAddress();
             
-            // 模拟连接过程
-            setTimeout(() => {
-                isWalletConnected = true;
-                currentWalletType = walletType;
-                currentWalletAddress = `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`;
-                updateWalletStatus();
-                updateWalletModalContent();
-                
-                // 更新按钮文本和状态指示器
-                const walletBtn = document.getElementById('connect-wallet-btn');
-                const walletBtnText = document.getElementById('wallet-btn-text');
-                const walletStatusIndicator = document.getElementById('wallet-status-indicator');
-                
-                walletBtnText.textContent = "已连接";
-                walletStatusIndicator.classList.remove('wallet-status-disconnected');
-                walletStatusIndicator.classList.add('wallet-status-connected');
-                
-                // 显示成功提示
-                alert(`成功连接到 ${walletType} 钱包！`);
-            }, 1500);
-        }
-        
-        // 连接微信钱包
-        function connectWechatWallet() {
-            // 显示微信支付二维码
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const wechatQRSection = document.getElementById('wechat-qr-section');
+            // 更新UI显示已连接状态
+            document.getElementById('connect-wallet-btn').classList.add('hidden');
+            document.getElementById('wallet-status').classList.remove('hidden');
+            document.getElementById('wallet-address').textContent = walletAddress;
             
-            disconnectedSection.classList.add('hidden');
-            wechatQRSection.classList.remove('hidden');
-        }
-        
-        // 连接支付宝钱包
-        function connectAlipayWallet() {
-            // 显示支付宝二维码
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const alipayQRSection = document.getElementById('alipay-qr-section');
+            // 显示成功消息
+            alert(`成功连接 ${walletNames[walletType]} 钱包！\n地址: ${walletAddress}`);
             
-            disconnectedSection.classList.add('hidden');
-            alipayQRSection.classList.remove('hidden');
-        }
-        
-        // 关闭微信二维码
-        function closeWechatQR() {
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const wechatQRSection = document.getElementById('wechat-qr-section');
-            
-            wechatQRSection.classList.add('hidden');
-            disconnectedSection.classList.remove('hidden');
-        }
-        
-        // 关闭支付宝二维码
-        function closeAlipayQR() {
-            const disconnectedSection = document.getElementById('wallet-disconnected-section');
-            const alipayQRSection = document.getElementById('alipay-qr-section');
-            
-            alipayQRSection.classList.add('hidden');
-            disconnectedSection.classList.remove('hidden');
-        }
-        
-        // 模拟微信扫码
-        function simulateWechatScan() {
-            // 显示加载状态
-            const wechatQRSection = document.getElementById('wechat-qr-section');
-            const loadingSection = document.getElementById('wallet-loading-section');
-            
-            wechatQRSection.classList.add('hidden');
-            loadingSection.classList.remove('hidden');
-            
-            // 模拟扫描过程
-            setTimeout(() => {
-                isWalletConnected = true;
-                currentWalletType = 'wechat';
-                currentWalletAddress = '微信用户_15800222338';
-                updateWalletStatus();
-                updateWalletModalContent();
-                
-                // 更新按钮文本和状态指示器
-                const walletBtnText = document.getElementById('wallet-btn-text');
-                const walletStatusIndicator = document.getElementById('wallet-status-indicator');
-                
-                walletBtnText.textContent = "已连接";
-                walletStatusIndicator.classList.remove('wallet-status-disconnected');
-                walletStatusIndicator.classList.add('wallet-status-connected');
-                
-                // 显示成功提示
-                alert("微信钱包连接成功！");
-            }, 2000);
-        }
-        
-        // 模拟支付宝扫码
-        function simulateAlipayScan() {
-            // 显示加载状态
-            const alipayQRSection = document.getElementById('alipay-qr-section');
-            const loadingSection = document.getElementById('wallet-loading-section');
-            
-            alipayQRSection.classList.add('hidden');
-            loadingSection.classList.remove('hidden');
-            
-            // 模拟扫描过程
-            setTimeout(() => {
-                isWalletConnected = true;
-                currentWalletType = 'alipay';
-                currentWalletAddress = '支付宝用户_15800222338';
-                updateWalletStatus();
-                updateWalletModalContent();
-                
-                // 更新按钮文本和状态指示器
-                const walletBtnText = document.getElementById('wallet-btn-text');
-                const walletStatusIndicator = document.getElementById('wallet-status-indicator');
-                
-                walletBtnText.textContent = "已连接";
-                walletStatusIndicator.classList.remove('wallet-status-disconnected');
-                walletStatusIndicator.classList.add('wallet-status-connected');
-                
-                // 显示成功提示
-                alert("支付宝钱包连接成功！");
-            }, 2000);
-        }
-        
-        function disconnectWallet() {
-            isWalletConnected = false;
-            updateWalletStatus();
-            updateWalletModalContent();
+            // 关闭钱包模态框
             closeWalletModal();
-            
-            // 更新按钮文本和状态指示器
-            const walletBtnText = document.getElementById('wallet-btn-text');
-            const walletStatusIndicator = document.getElementById('wallet-status-indicator');
-            
-            walletBtnText.textContent = "连接钱包";
-            walletStatusIndicator.classList.remove('wallet-status-connected');
-            walletStatusIndicator.classList.add('wallet-status-disconnected');
-            
-            // 显示断开连接提示
-            alert("钱包已断开连接");
         }
         
-        function updateWalletStatus() {
-            // 在实际应用中，这里会更新钱包状态
-            console.log(`钱包状态: ${isWalletConnected ? '已连接' : '未连接'}, 类型: ${currentWalletType}`);
+        // 生成随机钱包地址
+        function generateWalletAddress() {
+            const chars = '0123456789abcdef';
+            let address = '0x';
+            for (let i = 0; i < 10; i++) {
+                address += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return address + '...' + chars[Math.floor(Math.random() * chars.length)] + chars[Math.floor(Math.random() * chars.length)];
         }
         
-        // 钱包操作函数
-        function sendTransaction() {
-            alert('发送交易功能即将推出！');
+        // 显示钱包模态框
+        function showWalletModal() {
+            document.getElementById('wallet-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
         
-        function receiveTokens() {
-            alert('接收代币功能即将推出！');
+        // 关闭钱包模态框
+        function closeWalletModal() {
+            document.getElementById('wallet-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         
         // 初始化页面
@@ -1452,19 +2681,15 @@
                 });
             });
             
-            // 点击模态框外部关闭
-            const modal = document.getElementById('wallet-modal');
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
+            // 点击模态框外部关闭模态框
+            document.getElementById('wallet-modal').addEventListener('click', function(e) {
+                if (e.target.id === 'wallet-modal') {
                     closeWalletModal();
                 }
             });
-            
-            // 初始化钱包状态
-            updateWalletStatus();
         });
         
-        // 其他按钮功能函数
+        // 按钮功能函数
         function buyAssets() {
             alert('购买资产功能即将推出！');
         }
